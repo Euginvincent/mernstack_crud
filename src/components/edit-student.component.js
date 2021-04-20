@@ -11,6 +11,7 @@ export default class EditStudent extends Component {
     this.onChangeStudentName = this.onChangeStudentName.bind(this);
     this.onChangeStudentEmail = this.onChangeStudentEmail.bind(this);
     this.onChangeStudentRollno = this.onChangeStudentRollno.bind(this);
+    //this.onChangeStudentProfileImg = this.onChangeStudentProfileImg.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     // State
@@ -18,6 +19,7 @@ export default class EditStudent extends Component {
       name: '',
       email: '',
       rollno: ''
+      //profileimg:null
     }
   }
 
@@ -28,6 +30,7 @@ export default class EditStudent extends Component {
           name: res.data.name,
           email: res.data.email,
           rollno: res.data.rollno
+          //profileimg: res.data.profileimg
         });
       })
       .catch((error) => {
@@ -47,6 +50,11 @@ export default class EditStudent extends Component {
     this.setState({ rollno: e.target.value })
   }
 
+  // onChangeStudentProfileImg(e) {
+  //   this.setState({ profileimg: e.target.files[0] })
+  // }
+
+
   onSubmit(e) {
     e.preventDefault()
 
@@ -54,6 +62,8 @@ export default class EditStudent extends Component {
       name: this.state.name,
       email: this.state.email,
       rollno: this.state.rollno
+      //profileimg: this.state.profileimg
+
     };
 
     axios.put('http://localhost:4000/students/update-student/' + this.props.match.params.id, studentObject)
@@ -86,6 +96,12 @@ export default class EditStudent extends Component {
           <Form.Label>Roll No</Form.Label>
           <Form.Control type="text" value={this.state.rollno} onChange={this.onChangeStudentRollno} />
         </Form.Group>
+
+        {/* <Form.Group controlId="Name">
+          <Form.Label>Profile_Img</Form.Label>
+          <Form.Control type="file" accept="image/png, image/jpeg" onChange={this.onChangeStudentProfileImg} />
+        </Form.Group> */}
+
 
         <Button variant="danger" size="lg" block="block" type="submit">
           Update Student

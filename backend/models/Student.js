@@ -11,7 +11,7 @@ let studentSchema = new Schema({
   rollno: {
     type: Number
   },
-  profile_img: {
+  profileimg: {
     type: String
   }
 }, {

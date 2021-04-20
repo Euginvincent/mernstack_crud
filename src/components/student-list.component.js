@@ -40,6 +40,7 @@ export default class StudentList extends Component {
             <th>Name</th>
             <th>Email</th>
             <th>Roll No</th>
+            <th>Profile Img</th>
             <th>Action</th>
           </tr>
         </thead>

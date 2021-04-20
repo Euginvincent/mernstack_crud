@@ -25,6 +25,7 @@ export default class StudentTableRow extends Component {
                 <td>{this.props.obj.name}</td>
                 <td>{this.props.obj.email}</td>
                 <td>{this.props.obj.rollno}</td>
+                <td>{this.props.obj.profileimg}</td>
                 <td>
                     <Link className="edit-link" to={"/edit-student/" + this.props.obj._id}>
                         Edit

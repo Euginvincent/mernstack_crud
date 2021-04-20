@@ -43,12 +43,11 @@ export default class CreateStudent extends Component {
   onSubmit(e) {
     e.preventDefault()
 
-    const studentObject = {
-      name: this.state.name,
-      email: this.state.email,
-      rollno: this.state.rollno,
-      profileimg: this.state.profileimg,
-    };
+    const studentObject = new FormData()
+    studentObject.append('name', this.state.name)
+    studentObject.append('email', this.state.email)
+    studentObject.append('rollno', this.state.rollno)
+    studentObject.append('profileimg', this.state.profileimg)
 
     axios.post('http://localhost:4000/students/create-student', studentObject, {headers: {
       // 'content-type': 'multipart/form-data'
