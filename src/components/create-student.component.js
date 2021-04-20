@@ -12,13 +12,15 @@ export default class CreateStudent extends Component {
     this.onChangeStudentName = this.onChangeStudentName.bind(this);
     this.onChangeStudentEmail = this.onChangeStudentEmail.bind(this);
     this.onChangeStudentRollno = this.onChangeStudentRollno.bind(this);
+    this.onChangeStudentProfileImg = this.onChangeStudentProfileImg.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     // Setting up state
     this.state = {
       name: '',
       email: '',
-      rollno: ''
+      rollno: '',
+      profileimg:null
     }
   }
 
@@ -34,22 +36,30 @@ export default class CreateStudent extends Component {
     this.setState({ rollno: e.target.value })
   }
 
+  onChangeStudentProfileImg(e) {
+    this.setState({ profileimg: e.target.files[0] })
+  }
+
   onSubmit(e) {
     e.preventDefault()
 
     const studentObject = {
       name: this.state.name,
       email: this.state.email,
-      rollno: this.state.rollno
+      rollno: this.state.rollno,
+      profileimg: this.state.profileimg,
     };
 
-    axios.post('http://localhost:4000/students/create-student', studentObject)
+    axios.post('http://localhost:4000/students/create-student', studentObject, {headers: {
+      // 'content-type': 'multipart/form-data'
+    }})
       .then(res => console.log(res.data));
 
     this.setState({
       name: '',
       email: '',
-      rollno: ''
+      rollno: '',
+      profileimg: ''
     });
   }
 
@@ -69,6 +79,11 @@ export default class CreateStudent extends Component {
         <Form.Group controlId="Name">
           <Form.Label>Roll No</Form.Label>
           <Form.Control type="text" value={this.state.rollno} onChange={this.onChangeStudentRollno} />
+        </Form.Group>
+
+        <Form.Group controlId="Name">
+          <Form.Label>Profile_Img</Form.Label>
+          <Form.Control type="file" accept="image/png, image/jpeg" onChange={this.onChangeStudentProfileImg} />
         </Form.Group>
 
         <Button variant="danger" size="lg" block="block" type="submit">

@@ -10,6 +10,9 @@ let studentSchema = new Schema({
   },
   rollno: {
     type: Number
+  },
+  profile_img: {
+    type: String
   }
 }, {
     collection: 'students'
