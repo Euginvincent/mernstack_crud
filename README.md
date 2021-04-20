@@ -12,19 +12,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-<<<<<<< HEAD
-### Start Backend Server
-
-- Get inside the `backend` folder
-- Run `npm install` to install required packages 
-- Open terminal run `nodemon server.js`
-- Open other terminal run `mongod`
-
-Open API URL on [http://localhost:4000/students](http://localhost:4000/students) to view it in the browser.
-
-
-=======
->>>>>>> parent of 170136f... first commit with love
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.<br>
