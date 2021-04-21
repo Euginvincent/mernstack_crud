@@ -3,10 +3,26 @@ let mongoose = require('mongoose'),
   router = express.Router();
   // model = express.Model();
   const fileUpload = require('express-fileupload');
-  // var mongoosePaginate = require('mongoose-paginate');
   
-// Student Model
+  var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
+
+  
 let studentSchema = require('../models/Student');
+
+router.route("/paginationexample").get(function(req, res) {
+  var aggregateQuery = students.aggregate();
+
+  students.aggregatePaginate(aggregateQuery, { page: 3, limit: 5 }, function(
+    err,
+    result
+  ) {
+    if (err) {
+      console.err(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
 
 // CREATE Student
 router.use(fileUpload()).route('/create-student').post((req, res, next) => {
@@ -22,12 +38,10 @@ router.use(fileUpload()).route('/create-student').post((req, res, next) => {
     sampleFile = req.files.profileimg;
     uploadPath = __dirname + '/Public/' + sampleFile.name;
 
-    // Use the mv() method to place the file somewhere on your server
   sampleFile.mv(uploadPath, function(err) {
     if (err)
       return res.status(500).send(err);
 
-   // res.send('File uploaded!');
    let requestdata = req.body
    requestdata.profileimg = sampleFile.name
    studentSchema.create(requestdata, (error, data) => {
@@ -42,15 +56,7 @@ router.use(fileUpload()).route('/create-student').post((req, res, next) => {
 });
 
 // READ Students
-router.route('/').get((req, res) => {
-  // mongoosePaginate.paginate.options = { 
-  //   lean:  true,
-  //   limit: 5
-  // };
-  Model.paginate().then(function(result) {
-    //result.docs - array of plain javascript objects
-    //result.limit - 5
-});
+router.route('/').get((req, res) => {  
   studentSchema.find((error, data) => {
     if (error) {
       return next(error)
@@ -74,7 +80,6 @@ router.route('/edit-student/:id').get((req, res) => {
 
 // Update Student
 router.route('/update-student/:id').put((req, res, next) => {  
-   // res.send('File uploaded!');
    studentSchema.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
