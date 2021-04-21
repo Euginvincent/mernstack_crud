@@ -100,7 +100,7 @@ export default class EditStudent extends Component {
 
          <Form.Group controlId="Name">
           <Form.Label>Profile_Img</Form.Label>          
-          <Image style = {{width:"100px", height:"100px"}} src = {`http://localhost:4000/${this.state.profileimg}`} />
+          <Image style = {{width:"80px", height:"80px"}} src = {`http://localhost:4000/${this.state.profileimg}`} />
           {/* <Form.Control type="file" accept="image/png, image/jpeg" onChange={this.onChangeStudentProfileImg} /> */}
           
         </Form.Group> 

@@ -25,8 +25,8 @@ export default class StudentTableRow extends Component {
             <tr>
                 <td>{this.props.obj.name}</td>
                 <td>{this.props.obj.email}</td>
-                <td>{this.props.obj.rollno}</td>
-                <td><Image style = {{width:'50px', height:'50px'}} src = {`http://localhost:4000/${this.props.obj.profileimg}`}></Image></td>
+                <td><center>{this.props.obj.rollno}</center></td>
+                <td><center><Image style = {{width:'30px', height:'30px'}} src = {`http://localhost:4000/${this.props.obj.profileimg}`}></Image></center></td>
                 <td>
                     <Link className="edit-link" to={"/edit-student/" + this.props.obj._id}>
                         Edit
