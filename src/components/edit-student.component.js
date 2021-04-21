@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
 import axios from 'axios';
 
 export default class EditStudent extends Component {
@@ -11,15 +12,15 @@ export default class EditStudent extends Component {
     this.onChangeStudentName = this.onChangeStudentName.bind(this);
     this.onChangeStudentEmail = this.onChangeStudentEmail.bind(this);
     this.onChangeStudentRollno = this.onChangeStudentRollno.bind(this);
-    //this.onChangeStudentProfileImg = this.onChangeStudentProfileImg.bind(this);
+    this.onChangeStudentProfileImg = this.onChangeStudentProfileImg.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     // State
     this.state = {
       name: '',
       email: '',
-      rollno: ''
-      //profileimg:null
+      rollno: '',
+      profileimg:null
     }
   }
 
@@ -29,8 +30,8 @@ export default class EditStudent extends Component {
         this.setState({
           name: res.data.name,
           email: res.data.email,
-          rollno: res.data.rollno
-          //profileimg: res.data.profileimg
+          rollno: res.data.rollno,
+          profileimg: res.data.profileimg
         });
       })
       .catch((error) => {
@@ -50,9 +51,9 @@ export default class EditStudent extends Component {
     this.setState({ rollno: e.target.value })
   }
 
-  // onChangeStudentProfileImg(e) {
-  //   this.setState({ profileimg: e.target.files[0] })
-  // }
+  onChangeStudentProfileImg(e) {
+    this.setState({ profileimg: e.target.files[0] })
+  }
 
 
   onSubmit(e) {
@@ -61,8 +62,8 @@ export default class EditStudent extends Component {
     const studentObject = {
       name: this.state.name,
       email: this.state.email,
-      rollno: this.state.rollno
-      //profileimg: this.state.profileimg
+      rollno: this.state.rollno,
+      profileimg: this.state.profileimg
 
     };
 
@@ -97,10 +98,12 @@ export default class EditStudent extends Component {
           <Form.Control type="text" value={this.state.rollno} onChange={this.onChangeStudentRollno} />
         </Form.Group>
 
-        {/* <Form.Group controlId="Name">
-          <Form.Label>Profile_Img</Form.Label>
-          <Form.Control type="file" accept="image/png, image/jpeg" onChange={this.onChangeStudentProfileImg} />
-        </Form.Group> */}
+         <Form.Group controlId="Name">
+          <Form.Label>Profile_Img</Form.Label>          
+          <Image style = {{width:"100px", height:"100px"}} src = {`http://localhost:4000/${this.state.profileimg}`} />
+          {/* <Form.Control type="file" accept="image/png, image/jpeg" onChange={this.onChangeStudentProfileImg} /> */}
+          
+        </Form.Group> 
 
 
         <Button variant="danger" size="lg" block="block" type="submit">

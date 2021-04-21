@@ -3,6 +3,7 @@ let mongoose = require('mongoose');
 let cors = require('cors');
 let bodyParser = require('body-parser');
 let dbConfig = require('./database/db');
+var path = require('path');
 
 // Express Route
 const studentRoute = require('../backend/routes/student.route')
@@ -25,6 +26,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cors());
+var dir = path.join(__dirname, 'routes/Public');
+
+app.use(express.static(dir));
 app.use('/students', studentRoute)
 
 

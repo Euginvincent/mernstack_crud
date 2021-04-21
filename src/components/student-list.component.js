@@ -8,7 +8,7 @@ export default class StudentList extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
+    this.state = { 
       students: []
     };
   }
@@ -48,6 +48,7 @@ export default class StudentList extends Component {
           {this.DataTable()}
         </tbody>
       </Table>
+
     </div>);
   }
 }

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'; 
 
 export default class StudentTableRow extends Component {
 
     constructor(props) {
-        super(props);
+        super(props);        
         this.deleteStudent = this.deleteStudent.bind(this);
     }
 
@@ -25,7 +25,7 @@ export default class StudentTableRow extends Component {
                 <td>{this.props.obj.name}</td>
                 <td>{this.props.obj.email}</td>
                 <td>{this.props.obj.rollno}</td>
-                <td>{this.props.obj.profileimg}</td>
+                <td><img style = {{width:'50px', height:'50px'}} src = {`http://localhost:4000/${this.props.obj.profileimg}`}></img></td>
                 <td>
                     <Link className="edit-link" to={"/edit-student/" + this.props.obj._id}>
                         Edit
