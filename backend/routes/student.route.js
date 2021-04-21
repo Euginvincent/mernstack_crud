@@ -1,31 +1,21 @@
 let mongoose = require('mongoose'),
   express = require('express'),
   router = express.Router();
-  // model = express.Model();
   const fileUpload = require('express-fileupload');
   
-  var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
+  var path = require('path');
+  // router.use(express.static(path.join(__dirname, 'Public')));
+  // router.use('/img',express.static(path.join(__dirname, 'Public')));
+  router.use(express.static(path.resolve('./routes/Public')));
 
-  
+// Student Model
 let studentSchema = require('../models/Student');
-
-router.route("/paginationexample").get(function(req, res) {
-  var aggregateQuery = students.aggregate();
-
-  students.aggregatePaginate(aggregateQuery, { page: 3, limit: 5 }, function(
-    err,
-    result
-  ) {
-    if (err) {
-      console.err(err);
-    } else {
-      res.json(result);
-    }
-  });
-});
 
 // CREATE Student
 router.use(fileUpload()).route('/create-student').post((req, res, next) => {
+  console.log(req.body);
+  console.log(req.body.profileimg);
+  // res.json(req.body);
   
   let sampleFile;
   let uploadPath;
@@ -34,14 +24,19 @@ router.use(fileUpload()).route('/create-student').post((req, res, next) => {
   //   return res.status(400).send('No files were uploaded.');
   // }
 
+  console.log(req.files);
+
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     sampleFile = req.files.profileimg;
     uploadPath = __dirname + '/Public/' + sampleFile.name;
-
+    console.log(uploadPath);
+  
+  // Use the mv() method to place the file somewhere on your server
   sampleFile.mv(uploadPath, function(err) {
     if (err)
       return res.status(500).send(err);
 
+   // res.send('File uploaded!');
    let requestdata = req.body
    requestdata.profileimg = sampleFile.name
    studentSchema.create(requestdata, (error, data) => {
@@ -52,12 +47,13 @@ router.use(fileUpload()).route('/create-student').post((req, res, next) => {
       res.json(data)
     }
   })
-  });  
+  });
+  
 });
 
 // READ Students
-router.route('/').get((req, res) => {  
-  studentSchema.find((error, data) => {
+router.route('/').get((req, res, next) => {
+  studentSchema.paginate({}, {page: (req.query.page - 0 || 1), limit: (req.query.limit - 0 || 10)}, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -79,8 +75,8 @@ router.route('/edit-student/:id').get((req, res) => {
 
 
 // Update Student
-router.route('/update-student/:id').put((req, res, next) => {  
-   studentSchema.findByIdAndUpdate(req.params.id, {
+router.route('/update-student/:id').put((req, res, next) => {
+  studentSchema.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
     if (error) {
@@ -91,7 +87,6 @@ router.route('/update-student/:id').put((req, res, next) => {
       console.log('Student updated successfully !')
     }
   })
-  
 })
 
 // Delete Student

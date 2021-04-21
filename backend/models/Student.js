@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
+
 const Schema = mongoose.Schema;
-var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
 let studentSchema = new Schema({
   name: {
@@ -18,7 +19,7 @@ let studentSchema = new Schema({
 }, {
     collection: 'students'
   })
+  studentSchema.plugin(mongoosePaginate);
 
-  studentSchema.plugin(aggregatePaginate);
 
 module.exports = mongoose.model('Student', studentSchema)
